@@ -7,6 +7,10 @@ exports.editRestaurant = (req, res) => {
   res.render("editRestaurant", { title: "Add Restaurant" });
 };
 
+exports.createRestaurant = (req, res) => {
+  res.json(req.body)
+}
+
 exports.restaurantTags = (req, res) => {
   res.render("restaurantTags");
 };
