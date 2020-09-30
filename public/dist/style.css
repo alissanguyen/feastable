@@ -432,6 +432,12 @@ template {
 [hidden] {
   display: none; }
 
+@font-face {
+  font-family: 'panama';
+  src: url("/fonts/panama-bold-webfont.woff2") format("woff2"), url("/fonts/panama-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal; }
+
 html {
   font-size: 10px; }
 
@@ -525,7 +531,8 @@ label {
     width: 100%;
     top: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 5; }
+    z-index: 5;
+    left: 0; }
   .search__input {
     font-size: 30px;
     background: none;
@@ -704,34 +711,33 @@ label {
     background: #303030;
     color: white; }
 
-.stores {
+.restaurants {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -ms-flex-pack: justify;
-      justify-content: space-between; }
+  margin: -1.25em 0 0 -1.25em; }
 
-.store {
+.restaurant {
   background: white;
-  margin: 10px 0;
-  width: 30%;
+  margin: 1.25em 0 0 1.25em;
+  width: calc(33.3333% - 1.25em);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05); }
-  .store--wide {
+  .restaurant--wide {
     width: 100%; }
-  .store__details {
+  .restaurant__details {
     padding: 2rem; }
-    .store__details p {
+    .restaurant__details p {
       line-height: 1.2;
       margin-bottom: 0; }
   @media all and (max-width: 850px) {
-    .store {
-      width: 48%; } }
+    .restaurant {
+      width: calc(50% - 1.25em); } }
   @media all and (max-width: 550px) {
-    .store {
+    .restaurant {
       width: 100%; } }
 
-.store__actions {
+.restaurant__actions {
   position: relative;
   z-index: 2;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -747,19 +753,19 @@ label {
   -ms-flex-pack: distribute;
       justify-content: space-around; }
 
-.store__action {
+.restaurant__action {
   font-size: 10px; }
-  .store__action svg {
+  .restaurant__action svg {
     width: 25px;
     fill: white; }
-  .store__action--edit a {
+  .restaurant__action--edit a {
     border-bottom: 0; }
 
-.store__hero {
+.restaurant__hero {
   position: relative;
   padding: 0 10px 0 10px;
   text-align: right; }
-  .store__hero:before {
+  .restaurant__hero:before {
     display: block;
     content: '';
     position: absolute;
@@ -772,7 +778,7 @@ label {
     z-index: 1;
     -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%); }
-  .store__hero img {
+  .restaurant__hero img {
     height: 100%;
     width: 100%;
     top: 0;
@@ -866,6 +872,8 @@ label {
 .single__image {
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   object-fit: cover;
   position: absolute; }
 
@@ -1039,7 +1047,8 @@ label {
     display: flex;
     -ms-flex-pack: center;
         justify-content: center;
-    algin-items: center;
+    -ms-flex-align: center;
+        align-items: center;
     border-top: 1px solid #e6e6e6; }
     .reviewer__meta > * {
       -ms-flex: 1;
