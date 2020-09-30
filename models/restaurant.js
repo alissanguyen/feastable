@@ -15,6 +15,7 @@ const restaurantSchema = new mongoose.Schema({
     trim: true,
   },
   tags: [String],
+  categories: [String],
 });
 
 restaurantSchema.pre("save", function (next) {

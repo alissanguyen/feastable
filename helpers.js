@@ -19,11 +19,12 @@ exports.staticMap = ([lng, lat]) =>
 exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Some details about the site
-exports.siteName = `Now That's Delicious!`;
+exports.siteName = `Feastable`;
 
 exports.menu = [
-  { slug: "/restaurants", title: "Restaurants", icon: "store" },
+  { slug: "/restaurants", title: "Restaurants", icon: "restaurant" },
   { slug: "/tags", title: "Tags", icon: "tag" },
+  { slug: "/categories", title: "Categories", icon: "categories" },
   { slug: "/top", title: "Top", icon: "top" },
   { slug: "/add", title: "Add", icon: "add" },
   { slug: "/map", title: "Map", icon: "map" },

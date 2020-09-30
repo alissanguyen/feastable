@@ -3,8 +3,8 @@ exports.homePage = (req, res) => {
   res.render("homePage"); //render index file.
 };
 
-exports.addRestaurant = (req, res) => {
-  res.render("addRestaurant");
+exports.editRestaurant = (req, res) => {
+  res.render("editRestaurant", { title: "Add Restaurant" });
 };
 
 exports.restaurantTags = (req, res) => {
@@ -20,5 +20,9 @@ exports.topRestaurants = (req, res) => {
 };
 
 exports.allRestaurants = (req, res) => {
-    res.render("allRestaurants");
-  };
+  res.render("allRestaurants");
+};
+
+exports.restaurantCategories = (req, res) => {
+  res.render("restaurantCategories");
+};
