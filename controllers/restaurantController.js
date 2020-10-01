@@ -18,13 +18,12 @@ exports.addRestaurant = (req, res) => {
 };
 
 exports.createRestaurant = async (req, res) => {
-  const restaurant = new Restaurant(req.body);
-  await restaurant.save();
+  const restaurant = await new Restaurant(req.body).save();
   req.flash(
     "success",
     `Successfully created ${restaurant.name}. Care to leave a review?`
   );
-  res.redirect("/add");
+  res.redirect(`/restaurant/${restaurant.slug}`);
 };
 
 exports.restaurantTags = (req, res) => {
