@@ -1,0 +1,6 @@
+mixin restaurantCard(restaurant = {})
+    .restaurant
+        .restaurant__hero
+            img(src=`/uploads/${restaurant.photo || 'restaurant.png'}`)
+            h2.title
+                a(href=`/restaurant/${restaurant.slug}`) #{restaurant.name}

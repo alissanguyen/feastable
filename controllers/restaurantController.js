@@ -26,6 +26,13 @@ exports.createRestaurant = async (req, res) => {
   res.redirect(`/restaurant/${restaurant.slug}`);
 };
 
+exports.getRestaurants = async (req, res) => {
+  // 1. Query the database for a list of all stores
+  const restaurants = await Restaurant.find();
+
+  res.render("restaurants", { title: "Restaurants", restaurants });
+};
+
 exports.restaurantTags = (req, res) => {
   res.render("restaurantTags");
 };
@@ -36,10 +43,6 @@ exports.restaurantMap = (req, res) => {
 
 exports.topRestaurants = (req, res) => {
   res.render("topRestaurants");
-};
-
-exports.allRestaurants = (req, res) => {
-  res.render("allRestaurants");
 };
 
 exports.restaurantCategories = (req, res) => {
