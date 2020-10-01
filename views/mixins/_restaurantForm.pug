@@ -2,6 +2,10 @@ mixin restaurantForm(restaurant = {})
     form(action="/add" method="POST" class="card")
         label(for="name") Name
         input(type="text" name="name")
+        label(for="address") Address
+        input(type="text" name="address")
+        label(for="contact") Contact
+        input(type="text" name="contact")
         label(for = "description") Description
         textarea(name="description")
         - const choices = ['Wifi', 'Open 24/7', 'Dine-in', 'Delivery', 'Takeout', 'Family Friendly']
