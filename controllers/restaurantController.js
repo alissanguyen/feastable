@@ -1,15 +1,22 @@
+const { Store } = require("express-session");
+const mongoose = require("mongoose");
+
+const Restaurant = mongoose.model("Restaurant");
+
 exports.homePage = (req, res) => {
   console.log(req.name);
   res.render("homePage"); //render index file.
 };
 
-exports.editRestaurant = (req, res) => {
-  res.render("editRestaurant", { title: "Add Restaurant" });
+exports.addRestaurant = (req, res) => {
+  res.render("addRestaurant", { title: "Add Restaurant" });
 };
 
-exports.createRestaurant = (req, res) => {
-  res.json(req.body)
-}
+exports.createRestaurant = async (req, res) => {
+  const restaurant = new Restaurant(req.body);
+  await restaurant.save();
+  res.redirect("/");
+};
 
 exports.restaurantTags = (req, res) => {
   res.render("restaurantTags");
