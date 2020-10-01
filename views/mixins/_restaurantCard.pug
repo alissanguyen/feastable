@@ -1,6 +1,12 @@
 mixin restaurantCard(restaurant = {})
     .restaurant
         .restaurant__hero
+            .restaurant__actions
+                //- Will come back later.
+                button Blank 
             img(src=`/uploads/${restaurant.photo || 'restaurant.png'}`)
             h2.title
                 a(href=`/restaurant/${restaurant.slug}`) #{restaurant.name}
+        .restaurant__details
+            //- in case the restaurant has really long description.
+            p= restaurant.description.split(' ').slice(0, 25).join(' ') 

@@ -29,7 +29,6 @@ exports.createRestaurant = async (req, res) => {
 exports.getRestaurants = async (req, res) => {
   // 1. Query the database for a list of all stores
   const restaurants = await Restaurant.find();
-
   res.render("restaurants", { title: "Restaurants", restaurants });
 };
 
