@@ -1,5 +1,5 @@
 mixin restaurantForm(restaurant = {})
-    form(action="/add" method="POST" class="card")
+    form(action=`/add/${restaurant._id || ''}` method="POST" class="card")
         label(for="name") Name
         input(type="text" name="name" value=restaurant.name)
         label(for="address") Address
@@ -21,7 +21,7 @@ mixin restaurantForm(restaurant = {})
         ul.tags
             each category in categories
                 .tag.tag__choice
-                    input(type="checkbox" id=category value=category name="categories" checked=(tags1.includes(choice)))
+                    input(type="checkbox" id=category value=category name="categories" checked=(tags2.includes(category)))
                     label(for=category) #{category}
         input(type='submit' value="Submit" class="button")
     

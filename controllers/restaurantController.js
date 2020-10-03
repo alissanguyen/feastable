@@ -42,7 +42,7 @@ exports.editRestaurant = async (req, res) => {
   //3. Render out the edit form so the user can update their store.
   res.render("editRestaurant", {
     title: `Edit ${restaurant.name}`,
-    restaurant: restaurant,
+    restaurant,
   });
 };
 
