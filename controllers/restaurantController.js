@@ -46,6 +46,24 @@ exports.editRestaurant = async (req, res) => {
   });
 };
 
+exports.updateRestaurant = async (req, res) => {
+  // 1. Find and update the restaurant.
+  const restaurant = await Restaurant.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    {
+      new: true, // return the new restaurant instead of the old one.
+      runValidators: true,
+    }
+  ).exec();
+  // 2. Reflect user the restaurant and tell them it worked.
+  req.flash(
+    "success",
+    `Successfully updated <strong>${restaurant.name}</strong>. <a href="/restaurants/${restaurant.slug}">View Restaurant -></a>`
+  );
+  res.redirect(`/restaurants/${restaurant._id}/edit`);
+};
+
 exports.restaurantTags = (req, res) => {
   res.render("restaurantTags");
 };
