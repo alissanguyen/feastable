@@ -1,24 +1,27 @@
 mixin restaurantForm(restaurant = {})
     form(action="/add" method="POST" class="card")
         label(for="name") Name
-        input(type="text" name="name")
+        input(type="text" name="name" value=restaurant.name)
         label(for="address") Address
         input(type="text" name="address")
         label(for="contact") Contact
         input(type="text" name="contact")
         label(for = "description") Description
-        textarea(name="description")
+        textarea(name="description")= restaurant.description
         - const choices = ['Wifi', 'Open 24/7', 'Dine-in', 'Delivery', 'Takeout', 'Family Friendly']
         - const categories = ['Italian', 'Vegan', 'Greek', 'Indian', 'Chinese', 'Mexican', 'Thai', 'Japanese', 'Vietnamese', 'French', 'Spanish', 'Mediterranean']
+        - const tags1 = restaurant.tags || []
+        - const tags2 = restaurant.categories || []
+
         ul.tags
             each choice in choices
                 .tag.tag__choice
-                    input(type="checkbox" id=choice value=choice name="tags")
+                    input(type="checkbox" id=choice value=choice name="tags" checked=(tags1.includes(choice)))
                     label(for=choice) #{choice}
         ul.tags
             each category in categories
                 .tag.tag__choice
-                    input(type="checkbox" id=category value=category name="categories")
+                    input(type="checkbox" id=category value=category name="categories" checked=(tags1.includes(choice)))
                     label(for=category) #{category}
         input(type='submit' value="Submit" class="button")
     

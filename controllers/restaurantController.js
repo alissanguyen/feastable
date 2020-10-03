@@ -32,6 +32,20 @@ exports.getRestaurants = async (req, res) => {
   res.render("restaurants", { title: "Restaurants", restaurants });
 };
 
+exports.editRestaurant = async (req, res) => {
+  //1. Find the store given by the ID
+  const restaurant = await Restaurant.findOne({ _id: req.params.id });
+
+  console.log(restaurant);
+
+  //TODO: 2. Confirm they are the real owner of the store.
+  //3. Render out the edit form so the user can update their store.
+  res.render("editRestaurant", {
+    title: `Edit ${restaurant.name}`,
+    restaurant: restaurant,
+  });
+};
+
 exports.restaurantTags = (req, res) => {
   res.render("restaurantTags");
 };

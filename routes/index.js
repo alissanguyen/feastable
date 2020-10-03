@@ -10,6 +10,7 @@ router.get("/restaurants", catchErrors(restaurantController.getRestaurants));
 
 router.get("/add", restaurantController.addRestaurant);
 router.post("/add", catchErrors(restaurantController.createRestaurant));
+router.get('/restaurants/:id/edit', catchErrors(restaurantController.editRestaurant))
 
 router.get("/tags", restaurantController.restaurantTags);
 router.get("/map", restaurantController.restaurantMap);
