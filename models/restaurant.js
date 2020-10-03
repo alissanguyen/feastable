@@ -10,12 +10,30 @@ const restaurantSchema = new mongoose.Schema({
     required: "Please enter a restaurant name",
   },
   slug: String,
+  contact: {
+    type: Number,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
   description: {
     type: String,
     trim: true,
   },
   tags: [String],
   categories: [String],
+  location: {
+    type: {
+      type: String,
+      default: "Point",
+    },
+    coordinates: [{ type: Number, require: " You must supply coordinates!" }],
+    address: {
+      type: String,
+      required: "You must supply an address!", //TODO: Auto-generate address when users add a restaurant.
+    },
+  },
 });
 
 restaurantSchema.pre("save", function (next) {

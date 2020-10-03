@@ -3,9 +3,13 @@ mixin restaurantForm(restaurant = {})
         label(for="name") Name
         input(type="text" name="name" value=restaurant.name)
         label(for="address") Address
-        input(type="text" name="address")
+        input(type="text" id="address" name="location[address]" value=(restaurant.location && restaurant.location.address))
+        label(for "longitude") Address Longitude
+        input(type="text" id='longitude' name ="location[coordinates][0]" value=(restaurant.location && restaurant.location.coordinates[0]) required)
+        label(for "latitude") Address Latitude
+        input(type="text" id='latitude' name ="location[coordinates][1]" value=(restaurant.location && restaurant.location.coordinates[1]) required)
         label(for="contact") Contact
-        input(type="text" name="contact")
+        input(type="text" id="contact" name="[contact]" value=(restaurant.contact))
         label(for = "description") Description
         textarea(name="description")= restaurant.description
         - const choices = ['Wifi', 'Open 24/7', 'Dine-in', 'Delivery', 'Takeout', 'Family Friendly']
