@@ -4,10 +4,10 @@ mixin restaurantForm(restaurant = {})
         input(type="text" name="name" value=restaurant.name)
         label(for="address") Address
         input(type="text" id="address" name="location[address]" value=(restaurant.location && restaurant.location.address))
-        label(for "longitude") Address Longitude
-        input(type="text" id='longitude' name ="location[coordinates][0]" value=(restaurant.location && restaurant.location.coordinates[0]) required)
-        label(for "latitude") Address Latitude
-        input(type="text" id='latitude' name ="location[coordinates][1]" value=(restaurant.location && restaurant.location.coordinates[1]) required)
+        label(for "lng") Address Longitude
+        input(type="text" id='lng' name ="location[coordinates][0]" value=(restaurant.location && restaurant.location.coordinates[0]) required)
+        label(for "lat") Address Latitude
+        input(type="text" id='lat' name ="location[coordinates][1]" value=(restaurant.location && restaurant.location.coordinates[1]) required)
         label(for="contact") Contact
         input(type="text" id="contact" name="[contact]" value=(restaurant.contact))
         label(for = "description") Description
