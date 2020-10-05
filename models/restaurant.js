@@ -10,6 +10,7 @@ const restaurantSchema = new mongoose.Schema({
     required: "Please enter a restaurant name",
   },
   slug: String,
+  photo: String,
   contact: {
     type: Number,
   },
@@ -28,7 +29,7 @@ const restaurantSchema = new mongoose.Schema({
       type: String,
       default: "Point",
     },
-    coordinates: [{ type: Number, require: " You must supply coordinates!" }],
+    coordinates: [{ type: Number, required: " You must supply coordinates!" }],
     address: {
       type: String,
       required: "You must supply an address!", //TODO: Auto-generate address when users add a restaurant.

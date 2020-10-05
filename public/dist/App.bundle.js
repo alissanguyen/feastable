@@ -76,6 +76,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+// Function to autocomplete addresses from dropdown.
+
 function autocomplete(input, latInput, lngInput) {
   if (!input) return; //Skip this function from running if there is no input.
   var dropdown = new google.maps.places.Autocomplete(input);
@@ -86,7 +88,7 @@ function autocomplete(input, latInput, lngInput) {
     lngInput.value = place.geometry.location.lng();
   });
   // if user hits enter on the address field, don't submit the form.
-  input.on('keydown', function (e) {
+  input.on("keydown", function (e) {
     if (e.keyCode === 13) e.preventDefault();
   });
 }
