@@ -44,7 +44,12 @@ restaurantSchema.pre("save", async function (next) {
   }
   this.slug = slug(this.name);
 
-  //TODO: have unique slug for each restaurant.
+  // Create unique slug for restaurants that have the same name.
+  const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i"); //"i" stands for case insensitive
+  const restaurantWithSlug = await this.constructor.find({ slug: slugRegEx });
+  if (restaurantWithSlug.length) {
+    this.slug = `${this.slug}-${restaurantWithSlug.length + 1}`;
+  }
   next();
 });
 
