@@ -1,5 +1,26 @@
 extends layout 
 
 block content
-    .inner
-        h1=restaurant.name
+    .single
+        .single__hero
+            img.single__image(src=`/uploads/${restaurant.photo || 'restaurant.png'}`)
+            h2.title.title--single
+                a(href=`/restaurants/${restaurant.slug}`) #{restaurant.name}
+
+    .single__details.inner
+        img.single__map(src=h.staticMap(restaurant.location.coordinates))
+        p.single__location= restaurant.location.address
+
+        if restaurant.tags
+            ul.tags
+                each tag in restaurant.tags
+                    li.tag
+                        a.tag__link(href=`/tags/${tag}`)
+                            span.tag__text ##{tag}
+        
+        if restaurant.categories
+            ul.categories
+                each category in restaurant.categories
+                    li.categories
+                        a.category__link(href=`/categories/${category}`)
+                            span.category__text ##{category}

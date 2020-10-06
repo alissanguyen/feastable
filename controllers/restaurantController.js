@@ -97,8 +97,9 @@ exports.updateRestaurant = async (req, res) => {
   res.redirect(`/restaurants/${restaurant._id}/edit`);
 };
 
-exports.displayRestaurant = async (req, res) => {
-  const restaurant = await Restaurant.findOne({ _id: req.params.id });
+exports.getRestaurantBySlug = async (req, res) => {
+  const restaurant = await Restaurant.findOne({ slug: req.params.slug });
+  if (!restaurant) return next();
   res.render("singleRestaurant", {
     title: `${restaurant.name}`,
     restaurant,

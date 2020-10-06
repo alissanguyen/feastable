@@ -37,7 +37,7 @@ const restaurantSchema = new mongoose.Schema({
   },
 });
 
-restaurantSchema.pre("save", function (next) {
+restaurantSchema.pre("save", async function (next) {
   if (!this.isModified("name")) {
     next();
     return;

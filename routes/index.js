@@ -24,8 +24,8 @@ router.get(
 );
 
 router.get(
-  "/restaurants/:id",
-  catchErrors(restaurantController.displayRestaurant)
+  "/restaurants/:slug",
+  catchErrors(restaurantController.getRestaurantBySlug)
 );
 
 router.get("/tags", restaurantController.restaurantTags);
