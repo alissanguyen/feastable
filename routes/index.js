@@ -28,9 +28,16 @@ router.get(
   catchErrors(restaurantController.getRestaurantBySlug)
 );
 
-router.get("/tags", restaurantController.restaurantTags);
+router.get("/tags", restaurantController.getRestaurantByTag);
+router.get("/tags/:tag", restaurantController.getRestaurantByTag);
+
+router.get("/categories", restaurantController.getRestaurantByCategory);
+router.get(
+  "/categories/:category",
+  restaurantController.getRestaurantByCategory
+);
+
 router.get("/map", restaurantController.restaurantMap);
 router.get("/top", restaurantController.topRestaurants);
-router.get("/categories", restaurantController.restaurantCategories);
 
 module.exports = router;

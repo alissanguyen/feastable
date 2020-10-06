@@ -106,8 +106,10 @@ exports.getRestaurantBySlug = async (req, res) => {
   });
 };
 
-exports.restaurantTags = (req, res) => {
-  res.render("restaurantTags");
+exports.getRestaurantByTag = async (req, res) => {
+  const tags = await Restaurant.getTagsList()
+  const tag = req.params.tag;
+  res.render('restaurantTag', { tags, title: 'Tags', tag});
 };
 
 exports.restaurantMap = (req, res) => {
@@ -118,6 +120,8 @@ exports.topRestaurants = (req, res) => {
   res.render("topRestaurants");
 };
 
-exports.restaurantCategories = (req, res) => {
-  res.render("restaurantCategories");
+exports.getRestaurantByCategory = async (req, res) => {
+  const categories = await Restaurant.getCategoriesList()
+  const category = req.params.category;
+  res.render('restaurantCategory', { categories, title: 'Categories', category});
 };

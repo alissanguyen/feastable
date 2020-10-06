@@ -23,7 +23,7 @@ mixin restaurantForm(restaurant = {})
 
         //- Tags and types of restaurants
         textarea(name="description")= restaurant.description
-        - const choices = ['Wifi', 'Open 24/7', 'Dine-in', 'Delivery', 'Takeout', 'Family Friendly']
+        - const choices = ['Wifi', 'Open Late', 'Dine-in', 'Delivery', 'Takeout', 'Family Friendly']
         - const categories = ['Italian', 'Vegan', 'Greek', 'Indian', 'Chinese', 'Mexican', 'Thai', 'Japanese', 'Vietnamese', 'French', 'Spanish', 'Mediterranean']
         - const tags1 = restaurant.tags || []
         - const tags2 = restaurant.categories || []
