@@ -1,4 +1,3 @@
-const { Store } = require("express-session");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const jimp = require("jimp"); // resize photos before save into database
@@ -107,9 +106,33 @@ exports.getRestaurantBySlug = async (req, res) => {
 };
 
 exports.getRestaurantByTag = async (req, res) => {
-  const tags = await Restaurant.getTagsList()
   const tag = req.params.tag;
-  res.render('restaurantTag', { tags, title: 'Tags', tag});
+  const tagQuery = tag || { $exists: true };
+  const tagsPromise = Restaurant.getTagsList();
+  const restaurantsPromise = Restaurant.find({ tags: tagQuery });
+  const [tags, restaurants] = await Promise.all([
+    tagsPromise,
+    restaurantsPromise,
+  ]);
+  res.render("restaurantTag", { tags, title: "Tags", tag, restaurants });
+};
+
+exports.getRestaurantByCategory = async (req, res) => {
+  const category = req.params.category;
+  const categoryQuery = category || { $exists: true };
+  const categoriesPromise = Restaurant.getCategoriesList();
+  const restaurantsPromise = Restaurant.find({ categories: categoryQuery });
+  const [categories, restaurants] = await Promise.all([
+    categoriesPromise,
+    restaurantsPromise,
+  ]);
+
+  res.render("restaurantCategory", {
+    categories,
+    title: "Categories",
+    category,
+    restaurants,
+  });
 };
 
 exports.restaurantMap = (req, res) => {
@@ -118,10 +141,4 @@ exports.restaurantMap = (req, res) => {
 
 exports.topRestaurants = (req, res) => {
   res.render("topRestaurants");
-};
-
-exports.getRestaurantByCategory = async (req, res) => {
-  const categories = await Restaurant.getCategoriesList()
-  const category = req.params.category;
-  res.render('restaurantCategory', { categories, title: 'Categories', category});
 };

@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/_restaurantCard
+
 block content
     .inner
         h2 #{category || 'Categories'}
@@ -9,4 +11,6 @@ block content
                     a.category__link(href=`/categories/${c._id}` class=(c._id === category ? 'category__link--active' : ''))
                         span.category__text= c._id
                         span.category__count= c.count
-
+        .restaurants
+            each restaurant in restaurants
+                +restaurantCard(restaurant)

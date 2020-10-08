@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const restaurantController = require("../controllers/restaurantController");
-
+const userController = require("../controllers/userController");
 const { catchErrors } = require("../handlers/errorHandlers");
 
 // Redirect to different sites depends on URL
@@ -16,7 +16,12 @@ router.post(
   catchErrors(restaurantController.createRestaurant)
 );
 
-router.post("/add/:id", catchErrors(restaurantController.updateRestaurant));
+router.post(
+  "/add/:id",
+  restaurantController.upload,
+  catchErrors(restaurantController.resize),
+  catchErrors(restaurantController.updateRestaurant)
+);
 
 router.get(
   "/restaurants/:id/edit",
@@ -40,4 +45,9 @@ router.get(
 router.get("/map", restaurantController.restaurantMap);
 router.get("/top", restaurantController.topRestaurants);
 
+//User Accounts
+router.get('/login', userController.loginForm)
+
+
 module.exports = router;
+
