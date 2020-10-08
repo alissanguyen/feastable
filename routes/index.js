@@ -3,6 +3,7 @@ const router = express.Router();
 const restaurantController = require("../controllers/restaurantController");
 const userController = require("../controllers/userController");
 const { catchErrors } = require("../handlers/errorHandlers");
+const user = require("../models/user");
 
 // Redirect to different sites depends on URL
 router.get("/", catchErrors(restaurantController.getRestaurants));
@@ -45,7 +46,14 @@ router.get(
 router.get("/map", restaurantController.restaurantMap);
 router.get("/top", restaurantController.topRestaurants);
 
+
 //User Accounts
+router.get('/register', userController.registerForm)
+router.post('/register', userController.registerForm)
+    // 1. Validate the registration data
+    // 2. Register the user
+    // 3. Log them in
+
 router.get('/login', userController.loginForm)
 
 
