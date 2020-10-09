@@ -10,7 +10,11 @@ router.get("/", catchErrors(restaurantController.getRestaurants));
 router.get("/restaurants", catchErrors(restaurantController.getRestaurants));
 
 // Adding restaurants
-router.get("/add", authController.isLoggedIn, restaurantController.addRestaurant);
+router.get(
+  "/add",
+  authController.isLoggedIn,
+  restaurantController.addRestaurant
+);
 
 router.post(
   "/add",
@@ -28,7 +32,7 @@ router.post(
 
 // Edit individual restaurant
 router.get(
-  "/restaurants/:id/edit", 
+  "/restaurants/:id/edit",
   authController.isLoggedIn,
   catchErrors(restaurantController.editRestaurant)
 );
@@ -49,7 +53,6 @@ router.get(
   restaurantController.getRestaurantByCategory
 );
 
-
 router.get("/map", restaurantController.restaurantMap);
 router.get("/top", restaurantController.topRestaurants);
 
@@ -61,14 +64,25 @@ router.post(
   userController.userRegister,
   authController.login
 );
-router.get('/logout', authController.logout)
+router.get("/logout", authController.logout);
 
 router.get("/login", userController.loginForm);
-router.post('/login', authController.login);
+router.post("/login", authController.login);
 
 // Personal User Accounts
-router.get('/account', authController.isLoggedIn, userController.account);
-router.post('/account', catchErrors(userController.updateAccount))
-router.post('/account/resetpassword', catchErrors(authController.resetPassword))
+router.get("/account", authController.isLoggedIn, userController.account);
+router.post("/account", catchErrors(userController.updateAccount));
+
+// Reset Password
+router.post(
+  "/account/resetpassword",
+  catchErrors(authController.resetPassword)
+);
+router.get("/account/reset/:token", catchErrors(authController.reset));
+router.post(
+  "/account/reset/:token",
+  authController.confirmedPasswords,
+  catchErrors(authController.passwordUpdate)
+);
 
 module.exports = router;
