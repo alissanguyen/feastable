@@ -8,7 +8,7 @@ const { catchErrors } = require("../handlers/errorHandlers");
 // Redirect to different sites depends on URL
 router.get("/", catchErrors(restaurantController.getRestaurants));
 router.get("/restaurants", catchErrors(restaurantController.getRestaurants));
-router.get("/add", restaurantController.addRestaurant);
+router.get("/add", authController.isLoggedIn, restaurantController.addRestaurant);
 
 router.post(
   "/add",
@@ -25,7 +25,8 @@ router.post(
 );
 
 router.get(
-  "/restaurants/:id/edit",
+  "/restaurants/:id/edit", 
+  authController.isLoggedIn,
   catchErrors(restaurantController.editRestaurant)
 );
 
