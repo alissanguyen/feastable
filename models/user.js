@@ -9,9 +9,7 @@ const md5 = require("md5");
 const validator = require("validator");
 
 const mongodbErrorHandler = require("mongoose-mongodb-errors");
-const passportLocalMongoose = require("password-local-mongoose");
-
-
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new Schema({
   email: {

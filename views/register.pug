@@ -2,14 +2,14 @@ extends layout
 
 block content
     .inner
-        .form.form(action="/register" method="POST")
+        form.form(action="/register" method="POST")
             h2 Register
             label(for="name") Name
-            input(type="text" name="name" required)
+            input(type="text" name="name")
             label(for="email") Email
-            input(type="email" name="email" required)
+            input(type="email" name="email")
             label(for="password") Password
-            input(type="password" name="password" required)
+            input(type="password" name="password")
             label(type="password-confirm") Confirm Password
-            input(type="password-confirm" name = "password-confirm")
-            input(type="submit" value="Register ->")
+            input(type="password" name = "password-confirm")
+            input.button(type="submit" value="Register ➜")
