@@ -8,6 +8,8 @@ const { catchErrors } = require("../handlers/errorHandlers");
 // Redirect to different sites depends on URL
 router.get("/", catchErrors(restaurantController.getRestaurants));
 router.get("/restaurants", catchErrors(restaurantController.getRestaurants));
+
+// Adding restaurants
 router.get("/add", authController.isLoggedIn, restaurantController.addRestaurant);
 
 router.post(
@@ -24,17 +26,20 @@ router.post(
   catchErrors(restaurantController.updateRestaurant)
 );
 
+// Edit individual restaurant
 router.get(
   "/restaurants/:id/edit", 
   authController.isLoggedIn,
   catchErrors(restaurantController.editRestaurant)
 );
 
+// View individual restaurant
 router.get(
   "/restaurants/:slug",
   catchErrors(restaurantController.getRestaurantBySlug)
 );
 
+// View restaurants with tags and categories
 router.get("/tags", restaurantController.getRestaurantByTag);
 router.get("/tags/:tag", restaurantController.getRestaurantByTag);
 
@@ -44,10 +49,11 @@ router.get(
   restaurantController.getRestaurantByCategory
 );
 
+
 router.get("/map", restaurantController.restaurantMap);
 router.get("/top", restaurantController.topRestaurants);
 
-//User Accounts
+//User Accounts Register and Sign In
 router.get("/register", userController.registerForm);
 router.post(
   "/register",
@@ -60,5 +66,8 @@ router.get('/logout', authController.logout)
 router.get("/login", userController.loginForm);
 router.post('/login', authController.login);
 
+// Personal User Accounts
+router.get('/account', authController.isLoggedIn, userController.account);
+router.post('/account', catchErrors(userController.updateAccount))
 
 module.exports = router;
