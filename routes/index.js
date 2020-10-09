@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const restaurantController = require("../controllers/restaurantController");
 const userController = require("../controllers/userController");
+const authController = require("../controllers/authController");
 const { catchErrors } = require("../handlers/errorHandlers");
 
 // Redirect to different sites depends on URL
@@ -51,6 +52,7 @@ router.post(
   "/register",
   userController.validateRegister,
   userController.userRegister,
+  authController.login
 );
 
 router.get("/login", userController.loginForm);
