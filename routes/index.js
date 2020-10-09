@@ -69,5 +69,6 @@ router.post('/login', authController.login);
 // Personal User Accounts
 router.get('/account', authController.isLoggedIn, userController.account);
 router.post('/account', catchErrors(userController.updateAccount))
+router.post('/account/resetpassword', catchErrors(authController.resetPassword))
 
 module.exports = router;
