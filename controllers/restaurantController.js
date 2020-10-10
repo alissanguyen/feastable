@@ -50,6 +50,7 @@ exports.resize = async (req, res, next) => {
 };
 
 exports.createRestaurant = async (req, res) => {
+  req.body.author = req.user._id;
   const restaurant = await new Restaurant(req.body).save();
   req.flash(
     "success",
@@ -64,11 +65,19 @@ exports.getRestaurants = async (req, res) => {
   res.render("restaurants", { title: "Restaurants", restaurants });
 };
 
+const confirmOwner = (restaurant, user) => {
+  if (!restaurant.author.equals(user._id)) {
+    throw Error('You must own a store in order to edit it!');
+  }
+}
+
 exports.editRestaurant = async (req, res) => {
   //1. Find the store given by the ID
   const restaurant = await Restaurant.findOne({ _id: req.params.id });
 
-  //TODO: 2. Confirm they are the real owner of the store.
+  //2. Confirm they are the real owner of the store.
+  confirmOwner(restaurant, req.user);
+
   //3. Render out the edit form so the user can update their store.
   res.render("editRestaurant", {
     title: `Edit ${restaurant.name}`,
@@ -97,7 +106,7 @@ exports.updateRestaurant = async (req, res) => {
 };
 
 exports.getRestaurantBySlug = async (req, res) => {
-  const restaurant = await Restaurant.findOne({ slug: req.params.slug });
+  const restaurant = await (await Restaurant.findOne({ slug: req.params.slug })).populated('author');
   if (!restaurant) return next();
   res.render("singleRestaurant", {
     title: `${restaurant.name}`,

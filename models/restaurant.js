@@ -35,6 +35,11 @@ const restaurantSchema = new mongoose.Schema({
       required: "You must supply an address!", //TODO: Auto-generate address when users add a restaurant.
     },
   },
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'You must supply an author'
+  },
 });
 
 restaurantSchema.pre("save", async function (next) {
