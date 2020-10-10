@@ -85,4 +85,10 @@ router.post(
   catchErrors(authController.passwordUpdate)
 );
 
+/* 
+  API
+*/
+router.get('/api/search', catchErrors(restaurantController.searchRestaurants))
+
+
 module.exports = router;

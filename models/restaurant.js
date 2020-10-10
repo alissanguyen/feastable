@@ -42,6 +42,12 @@ const restaurantSchema = new mongoose.Schema({
   },
 });
 
+// Define indexes
+restaurantSchema.index({
+  name: 'text',
+  description: 'text',
+})  
+
 restaurantSchema.pre("save", async function (next) {
   if (!this.isModified("name")) {
     next();

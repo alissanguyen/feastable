@@ -67,9 +67,9 @@ exports.getRestaurants = async (req, res) => {
 
 const confirmOwner = (restaurant, user) => {
   if (!restaurant.author.equals(user._id)) {
-    throw Error('You must own a store in order to edit it!');
+    throw Error("You must own a store in order to edit it!");
   }
-}
+};
 
 exports.editRestaurant = async (req, res) => {
   //1. Find the store given by the ID
@@ -106,7 +106,9 @@ exports.updateRestaurant = async (req, res) => {
 };
 
 exports.getRestaurantBySlug = async (req, res) => {
-  const restaurant = await (await Restaurant.findOne({ slug: req.params.slug })).populated('author');
+  const restaurant = await (
+    await Restaurant.findOne({ slug: req.params.slug })
+  ).populated("author");
   if (!restaurant) return next();
   res.render("singleRestaurant", {
     title: `${restaurant.name}`,
@@ -142,6 +144,22 @@ exports.getRestaurantByCategory = async (req, res) => {
     category,
     restaurants,
   });
+};
+
+exports.searchRestaurants = async (req, res) => {
+  const restaurants = await Restaurant
+      // Find restaurants that match
+      .find(
+        {$text: {$search: req.query.q} },
+        // Create a new field (objecting) to keep track of how good the matches are 
+        {score: { $meta: "textScore" },
+        })
+      // Sort and load best matched restaurants first 
+      .sort({
+        score: { $meta: "textScore" },
+      })
+      // Only show 20 best matched restaurants.
+      .limit(20)
 };
 
 exports.restaurantMap = (req, res) => {
