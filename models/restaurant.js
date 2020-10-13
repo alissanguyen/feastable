@@ -37,16 +37,16 @@ const restaurantSchema = new mongoose.Schema({
   },
   author: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: 'You must supply an author'
+    ref: "User",
+    required: "You must supply an author",
   },
 });
 
 // Define indexes
 restaurantSchema.index({
-  name: 'text',
-  description: 'text',
-})  
+  name: "text",
+  description: "text",
+});
 
 restaurantSchema.pre("save", async function (next) {
   if (!this.isModified("name")) {
@@ -64,20 +64,20 @@ restaurantSchema.pre("save", async function (next) {
   next();
 });
 
-restaurantSchema.statics.getTagsList = function() {
+restaurantSchema.statics.getTagsList = function () {
   return this.aggregate([
-    { $unwind: '$tags'},
-    { $group: { _id: '$tags', count: { $sum: 1} }},
-    { $sort: { count: -1 } }
+    { $unwind: "$tags" },
+    { $group: { _id: "$tags", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
   ]);
-}
+};
 
-restaurantSchema.statics.getCategoriesList = function() {
+restaurantSchema.statics.getCategoriesList = function () {
   return this.aggregate([
-    { $unwind: '$categories'},
-    { $group: { _id: '$categories', count: { $sum: 1} }},
-    { $sort: { count: -1 } }
+    { $unwind: "$categories" },
+    { $group: { _id: "$categories", count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
   ]);
-}
+};
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);

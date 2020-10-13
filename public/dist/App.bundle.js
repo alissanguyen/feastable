@@ -980,7 +980,7 @@ exports.$$ = $$;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _axios = __webpack_require__(12);
@@ -994,71 +994,70 @@ var _dompurify2 = _interopRequireDefault(_dompurify);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function searchResultsHTML(restaurants) {
-    return restaurants.map(function (restaurant) {
-        return '\n            <a href="/restaurant/' + restaurant.slug + '" class="search__result">\n                <strong>' + restaurant.name + '</strong>\n            </a>\n        ';
-    }).join('');
+  return restaurants.map(function (restaurant) {
+    return "\n            <a href=\"/restaurant/" + restaurant.slug + "\" class=\"search__result\">\n                <strong>" + restaurant.name + "</strong>\n            </a>\n        ";
+  }).join("");
 }
 
 function typeAhead(search) {
-    if (!search) return;
+  if (!search) return;
 
-    var searchInput = search.querySelector('input[name="search"]');
-    var searchResults = search.querySelector('.search__results');
+  var searchInput = search.querySelector('input[name="search"]');
+  var searchResults = search.querySelector(".search__results");
 
-    searchInput.on('input', function () {
-        var _this = this;
+  searchInput.on("input", function () {
+    var _this = this;
 
-        // If there is no value, quit searching process
-        if (!this.value) {
-            searchResults.style.display = 'none';
-            return; // STOP
-        }
+    // If there is no value, quit searching process
+    if (!this.value) {
+      searchResults.style.display = "none";
+      return; // STOP
+    }
 
-        // Show the search results
-        searchResults.style.display = 'block';
-        searchResults.innerHTML = '';
+    // Show the search results
+    searchResults.style.display = "block";
 
-        _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
-            if (res.data.length) {
-                searchResults.innerHTML = _dompurify2.default.sanitize(searchResultsHTML(res.data));
-                return;
-            }
-            // tell users nothing came back
-            searchResults.innerHTML = _dompurify2.default.sanitize('<div class="search__result">No results for ' + _this.value + ' found!</div>');
-        }).catch(function (err) {
-            console.error(err);
-        });
+    _axios2.default.get("/api/search?q=" + this.value).then(function (res) {
+      if (res.data.length) {
+        searchResults.innerHTML = _dompurify2.default.sanitize(searchResultsHTML(res.data));
+        return;
+      }
+      // tell users nothing came back
+      searchResults.innerHTML = _dompurify2.default.sanitize("<div class=\"search__result\">No results for " + _this.value + " found!</div>");
+    }).catch(function (err) {
+      console.error(err);
     });
+  });
 
-    // handle keyboard input
-    searchInput.on('keyup', function (e) {
-        // if the user isn't pressing up, down, or enter, ignore
-        if (![38, 40, 13].includes(e.keyCode)) {
-            return;
-        }
-        var activeClass = 'search__result--active';
-        var current = search.querySelector('.' + activeClass);
-        var items = search.querySelectorAll('.search__result');
-        var next = void 0;
-        if (e.keyCode === 40 && current) {
-            next = current.nextElementSibling || items[0];
-        } else if (e.keyCode === 40) {
-            next = items[0];
-        } else if (e.keyCode === 38 && current) {
-            next = current.previousElementSibling || items[items.length - 1];
-        } else if (e.keyCode === 38) {
-            next = items[items.length - 1];
-        } else if (e.keyCode === 13 && current.href) {
-            window.location = current.href;
-            return;
-        }
+  // handle keyboard input
+  searchInput.on("keyup", function (e) {
+    // if the user isn't pressing up, down, or enter, ignore
+    if (![38, 40, 13].includes(e.keyCode)) {
+      return;
+    }
+    var activeClass = "search__result--active";
+    var current = search.querySelector("." + activeClass);
+    var items = search.querySelectorAll(".search__result");
+    var next = void 0;
+    if (e.keyCode === 40 && current) {
+      next = current.nextElementSibling || items[0];
+    } else if (e.keyCode === 40) {
+      next = items[0];
+    } else if (e.keyCode === 38 && current) {
+      next = current.previousElementSibling || items[items.length - 1];
+    } else if (e.keyCode === 38) {
+      next = items[items.length - 1];
+    } else if (e.keyCode === 13 && current.href) {
+      window.location = current.href;
+      return;
+    }
 
-        if (current) {
-            current.classList.remove(activeClass);
-        }
-        next.classList.add(activeClass);
-    });
-};
+    if (current) {
+      current.classList.remove(activeClass);
+    }
+    next.classList.add(activeClass);
+  });
+}
 
 exports.default = typeAhead;
 

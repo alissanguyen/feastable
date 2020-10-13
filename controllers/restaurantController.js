@@ -148,18 +148,20 @@ exports.getRestaurantByCategory = async (req, res) => {
 
 exports.searchRestaurants = async (req, res) => {
   const restaurants = await Restaurant
-      // Find restaurants that match
-      .find(
-        {$text: {$search: req.query.q} },
-        // Create a new field (objecting) to keep track of how good the matches are 
-        {score: { $meta: "textScore" },
-        })
-      // Sort and load best matched restaurants first 
-      .sort({
-        score: { $meta: "textScore" },
-      })
-      // Only show 20 best matched restaurants.
-      .limit(20)
+    // Find restaurants that match
+    .find(
+      { $text: { $search: req.query.q } },
+      // Create a new field (objecting) to keep track of how good the matches are
+      { score: { $meta: "textScore" } }
+    )
+    // Sort and load best matched restaurants first
+    .sort({
+      score: { $meta: "textScore" },
+    })
+    // Only show 20 best matched restaurants.
+    .limit(20);
+
+  res.json(restaurants);
 };
 
 exports.restaurantMap = (req, res) => {

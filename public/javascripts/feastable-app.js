@@ -9,4 +9,3 @@ import typeAhead from "./modules/typeAhead";
 autocomplete($("#address"), $("#lat"), $("#lng"));
 
 typeAhead($(".search"));
- 

@@ -88,7 +88,6 @@ router.post(
 /* 
   API
 */
-router.get('/api/search', catchErrors(restaurantController.searchRestaurants))
-
+router.get("/api/search", catchErrors(restaurantController.searchRestaurants));
 
 module.exports = router;
