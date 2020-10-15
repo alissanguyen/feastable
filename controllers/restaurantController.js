@@ -164,10 +164,28 @@ exports.searchRestaurants = async (req, res) => {
   res.json(restaurants);
 };
 
-exports.restaurantMap = (req, res) => {
-  res.render("restaurantMap");
-};
-
 exports.topRestaurants = (req, res) => {
   res.render("topRestaurants");
 };
+
+exports.mapRestaurants = async (req, res) => {
+  const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
+  const q = {
+    location: {
+      $near: {
+        $geomery: {
+          type: 'Point',
+          coordinates
+        },
+        $maxDistance: 10000 //10km
+      }
+    }
+  };
+  const restaurants = await Restaurant.find(q).select('slug name description location').limit(10);
+
+}
+
+exports.mapPage = (req, res) => {
+  res.render('restaurantMap', {title: 'Map'};)
+}
+

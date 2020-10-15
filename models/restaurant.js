@@ -48,6 +48,8 @@ restaurantSchema.index({
   description: "text",
 });
 
+restaurantSchema.index({ location: "2dsphere" });
+
 restaurantSchema.pre("save", async function (next) {
   if (!this.isModified("name")) {
     next();

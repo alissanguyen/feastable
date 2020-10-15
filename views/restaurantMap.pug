@@ -1,4 +1,10 @@
 extends layout
 
 block content
-    p Show map of restaurants near user
+    .inner
+        h2= title
+            .map
+                .autocomplete
+                    input.autocomplete__input(type="text" placeholder="Search for restaurant" name="geolocate")
+                #map
+                    p Loading Map...

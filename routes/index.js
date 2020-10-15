@@ -53,7 +53,7 @@ router.get(
   restaurantController.getRestaurantByCategory
 );
 
-router.get("/map", restaurantController.restaurantMap);
+router.get("/map", restaurantController.mapPage);
 router.get("/top", restaurantController.topRestaurants);
 
 //User Accounts Register and Sign In
@@ -89,5 +89,6 @@ router.post(
   API
 */
 router.get("/api/search", catchErrors(restaurantController.searchRestaurants));
+router.get("api/restaurants/near", catchErrors(restaurantController.mapRestaurants))
 
 module.exports = router;
