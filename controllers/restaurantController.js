@@ -174,18 +174,19 @@ exports.mapRestaurants = async (req, res) => {
     location: {
       $near: {
         $geomery: {
-          type: 'Point',
-          coordinates
+          type: "Point",
+          coordinates,
         },
-        $maxDistance: 10000 //10km
-      }
-    }
+        $maxDistance: 10000, //10km
+      },
+    },
   };
-  const restaurants = await Restaurant.find(q).select('slug name description location').limit(10);
-
-}
+  const restaurants = await Restaurant.find(q)
+    .select("slug name description location")
+    .limit(10);
+  res.json(restaurants);
+};
 
 exports.mapPage = (req, res) => {
-  res.render('restaurantMap', {title: 'Map'};)
-}
-
+  res.render("restaurantMap", { title: "Map" });
+};

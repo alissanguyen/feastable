@@ -2717,7 +2717,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _axios = __webpack_require__(12);
@@ -2726,13 +2726,20 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var mapOptions = {
+  center: { lat: 43.2, lng: -79.8 },
+  zoom: 2
+};
+
 function loadPlaces(map) {
-    var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 43.2;
-    var lng = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -79.8;
+  var lat = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 43.2;
+  var lng = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -79.8;
 }
 
 function makeMap(mapDiv) {
-    if (!mapDiv) return;
+  if (!mapDiv) return;
+  //make the map
+  var map = new google.maps.Map(mapDiv, mapOptions);
 }
 
 exports.default = makeMap;
