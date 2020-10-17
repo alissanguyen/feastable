@@ -15,6 +15,7 @@ const multerOptions = {
 };
 
 const Restaurant = mongoose.model("Restaurant");
+const User = mongoose.model('User');
 
 exports.homePage = (req, res) => {
   req.flash("error", "<strong>Error 404 Restaurant not found. Add?</strong>");
@@ -183,15 +184,28 @@ exports.mapRestaurants = async (req, res) => {
     },
   };
 
-  const restaurants = await Restaurant.find(q);
-  // .select("slug name description location photo")
-  // .limit(10);
+  const restaurants = await Restaurant.find(q)
+    .select("slug name description location photo")
+    .limit(10);
 
-  // console.log(restaurants);
+  console.log(restaurants);
 
-  res.json(restaurants);
 };
 
 exports.mapPage = (req, res) => {
   res.render("restaurantMap", { title: "Map" });
 };
+
+exports.heartRestaurant = async (req, res) => {
+  const hearts = req.user.hearts.map(obj => obj.toString());
+  const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
+  const user = await User
+    .findByIdAndUpdate(
+      req.user._id,
+      { [operator]: { hearts: req.params.id} },
+      { new: true }
+    );
+
+  res.json(user);
+
+}

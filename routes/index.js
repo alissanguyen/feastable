@@ -89,6 +89,7 @@ router.post(
   API
 */
 router.get("/api/search", catchErrors(restaurantController.searchRestaurants));
-router.get("/api/restaurants/near", catchErrors(restaurantController.mapRestaurants))
+router.get("/api/restaurants/near", catchErrors(restaurantController.mapRestaurants));
+router.post("/api/restaurants/:id/heart", catchErrors(restaurantController.heartRestaurant));
 
 module.exports = router;
