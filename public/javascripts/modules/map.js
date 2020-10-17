@@ -7,45 +7,48 @@ const mapOptions = {
 };
 
 function loadPlaces(map, lat = 43.2, lng = -79.8) {
-  axios.get(`/api/restaurants/near?lat=${lat}&lng=${lng}`)
-    .then((res) => {
-        const places = res.data;
-        if (!places.length) {
-            alert("No restaurants found!");
-            return;
-        }
+  axios.get(`/api/restaurants/near?lat=${lat}&lng=${lng}`).then((res) => {
+    const places = res.data;
+    if (!places.length) {
+      alert("No restaurants found!");
+      return;
+    }
 
-        // create a bounds
-        const bounds = new google.maps.LatLngBounds();
-        const infoWindow = new google.maps.InfoWindow();
+    // create a bounds
+    const bounds = new google.maps.LatLngBounds();
+    const infoWindow = new google.maps.InfoWindow();
 
-        const markers = places.map(place => {
-            const [placeLng, placeLat] = place.location.coordinates;
-            const position = { lat: placeLat, lng: placeLng };
-            bounds.extend(position);
-            const marker = new google.maps.Marker({ map, position });
-            marker.place = place;
-            return marker;
-        });
+    const markers = places.map((place) => {
+      const [placeLng, placeLat] = place.location.coordinates;
 
-        // when a user clicks on a marker, show the details of that restaurant
-        markers.forEach((marker) =>
-            marker.addListener("click", function () {
-                const html = 
-                    `<div class="info-window">
+      const position = { lat: placeLat, lng: placeLng };
+      bounds.extend(position);
+      const marker = new google.maps.Marker({ map, position });
+
+      marker.place = place;
+      return marker;
+    });
+
+    // when a user clicks on a marker, show the details of that restaurant
+    markers.forEach((marker) =>
+      marker.addListener("click", function () {
+        console.log(this.place);
+        const html = `<div class="info-window">
                         <a href="/restaurant/${this.place.slug}">
-                            <img src="/uploads/${this.place.photo || "restaurant.png"} alt="${this.place.name}" />
-                                <p>${this.place.name} - ${this.place.location.address}</p>
+                            <img src="/uploads/${this.place.photo || 'restaurant.png'}" alt="${this.place.name}" />
+                                <p>${this.place.name} - ${
+          this.place.location.address
+        }</p>
                         </a>
                     </div>`;
-            infoWindow.setContent(html);
-            infoWindow.open(map, this);
-        })
-        );
+        infoWindow.setContent(html);
+        infoWindow.open(map, this);
+      })
+    );
 
-        //then zoom the map to fit all markers
-        map.setCenter(bounds.getCenter());
-        map.fitBounds(bounds);
+    //then zoom the map to fit all markers
+    map.setCenter(bounds.getCenter());
+    map.fitBounds(bounds);
   });
 }
 

@@ -169,11 +169,12 @@ exports.topRestaurants = (req, res) => {
 };
 
 exports.mapRestaurants = async (req, res) => {
-  const coordinates = [req.query.lng, req. query.lat].map(parseFloat);
+  const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
+  console.log("IN HERE.....", coordinates);
   const q = {
     location: {
       $near: {
-        $geomery: {
+        $geometry: {
           type: "Point",
           coordinates,
         },
@@ -181,9 +182,13 @@ exports.mapRestaurants = async (req, res) => {
       },
     },
   };
-  const restaurants = await Restaurant.find(q)
-    .select("slug name description location photo")
-    .limit(10);
+
+  const restaurants = await Restaurant.find(q);
+  // .select("slug name description location photo")
+  // .limit(10);
+
+  // console.log(restaurants);
+
   res.json(restaurants);
 };
 

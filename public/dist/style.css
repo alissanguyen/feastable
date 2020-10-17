@@ -1147,9 +1147,9 @@ label {
 #map {
   height: 500px; }
 
-.popup {
+.info-window {
   width: 300px; }
-  .popup img {
+  .info-window img {
     width: 100%; }
 
 .hide {
