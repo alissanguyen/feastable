@@ -8,7 +8,7 @@ import typeAhead from "./modules/typeAhead";
 
 import makeMap from "./modules/map";
 
-import ajaxHeart from "./modules/heart"
+import ajaxHeart from "./modules/heart";
 
 autocomplete($("#address"), $("#lat"), $("#lng"));
 

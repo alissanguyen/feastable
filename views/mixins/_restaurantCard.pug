@@ -7,7 +7,7 @@ mixin restaurantCard(restaurant = {})
                         form.heart(method="POST" action=`/api/restaurants/${restaurant._id}/heart`)
                             - const heartStrings = user.hearts.map(obj => obj.toString())
                             - const heartClass = heartStrings.includes(restaurant._id.toString()) ? 'heart__button--hearted' : ''
-                            button(type="submit" name="heart" class=heartClass) 
+                            button.heart__button(type="submit" name="heart" class=heartClass) 
                                 != h.icon('heart')
                 if user && restaurant.author.equals(user._id)
                     .restaurant__action.restaurant__action--edit
