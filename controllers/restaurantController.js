@@ -114,8 +114,16 @@ exports.getFavoriteRestaurants = async (req, res) => {
 };
 
 exports.getRestaurantBySlug = async (req, res, next) => {
-  const restaurant = await Restaurant.findOne({ slug: req.params.slug }).populate("author");
+  const restaurant = await Restaurant.findOne({
+    slug: req.params.slug,
+  }).populate("author reviews");
   if (!restaurant) return next();
+
+  // To display latest review first
+  restaurant.reviews.sort((review1, review2) => {
+    return review2.created.valueOf() - review1.created.valueOf();
+  });
+
   res.render("singleRestaurant", { restaurant, title: `${restaurant.name}` });
 };
 

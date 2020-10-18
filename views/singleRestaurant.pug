@@ -1,6 +1,7 @@
 extends layout 
 
 include mixins/_reviewForm
+include mixins/_review
 
 block content
     .single
@@ -29,3 +30,9 @@ block content
 
         if user
             +reviewForm(restaurant)
+
+        if restaurant.reviews
+            .reviews
+                each review in restaurant.reviews
+                    .review
+                        +review(review)

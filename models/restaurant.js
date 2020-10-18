@@ -1,46 +1,53 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-
 const slug = require("slugs");
 
-const restaurantSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: "Please enter a restaurant name",
-  },
-  slug: String,
-  photo: String,
-  contact: {
-    type: Number,
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  description: {
-    type: String,
-    trim: true,
-  },
-  tags: [String],
-  categories: [String],
-  location: {
-    type: {
+const restaurantSchema = new mongoose.Schema(
+  {
+    name: {
       type: String,
-      default: "Point",
+      trim: true,
+      required: "Please enter a restaurant name",
     },
-    coordinates: [{ type: Number, required: " You must supply coordinates!" }],
-    address: {
+    slug: String,
+    photo: String,
+    contact: {
+      type: Number,
+    },
+    created: {
+      type: Date,
+      default: Date.now,
+    },
+    description: {
       type: String,
-      required: "You must supply an address!", //TODO: Auto-generate address when users add a restaurant.
+      trim: true,
+    },
+    tags: [String],
+    categories: [String],
+    location: {
+      type: {
+        type: String,
+        default: "Point",
+      },
+      coordinates: [
+        { type: Number, required: " You must supply coordinates!" },
+      ],
+      address: {
+        type: String,
+        required: "You must supply an address!", //TODO: Auto-generate address when users add a restaurant.
+      },
+    },
+    author: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: "You must supply an author",
     },
   },
-  author: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: "You must supply an author",
-  },
-});
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
 
 // Define indexes
 restaurantSchema.index({
@@ -48,6 +55,7 @@ restaurantSchema.index({
   description: "text",
 });
 
+// For displaying markers on map
 restaurantSchema.index({ location: "2dsphere" });
 
 restaurantSchema.pre("save", async function (next) {
@@ -56,7 +64,6 @@ restaurantSchema.pre("save", async function (next) {
     return;
   }
   this.slug = slug(this.name);
-
   // Create unique slug for restaurants that have the same name.
   const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, "i"); //"i" stands for case insensitive
   const restaurantWithSlug = await this.constructor.find({ slug: slugRegEx });
@@ -81,5 +88,12 @@ restaurantSchema.statics.getCategoriesList = function () {
     { $sort: { count: -1 } },
   ]);
 };
+
+// Find reviews where the restaurants '_id' property === reviews 'restaurant' property
+restaurantSchema.virtual("reviews", {
+  ref: "Review", // link to 'Review' model
+  localField: "_id", // which field on the restaurant?
+  foreignField: "restaurant", // which field on the review?
+});
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);

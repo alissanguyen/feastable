@@ -3,7 +3,7 @@ const router = express.Router();
 const restaurantController = require("../controllers/restaurantController");
 const userController = require("../controllers/userController");
 const authController = require("../controllers/authController");
-const reviewController = require("../controllers/reviewController");
+const reviewController = require("../controllers/reviewController");''
 const { catchErrors } = require("../handlers/errorHandlers");
 
 // Redirect to different sites depends on URL
