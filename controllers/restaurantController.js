@@ -15,7 +15,7 @@ const multerOptions = {
 };
 
 const Restaurant = mongoose.model("Restaurant");
-const User = mongoose.model('User');
+const User = mongoose.model("User");
 
 exports.homePage = (req, res) => {
   req.flash("error", "<strong>Error 404 Restaurant not found. Add?</strong>");
@@ -106,6 +106,13 @@ exports.updateRestaurant = async (req, res) => {
   res.redirect(`/restaurants/${restaurant._id}/edit`);
 };
 
+exports.getFavoriteRestaurants = async (req, res) => {
+  const restaurants = await Restaurant.find({
+    _id: { $in: req.user.hearts },
+  });
+  res.render("restaurants", { title: "Favorite Restaurants", restaurants });
+};
+
 exports.getRestaurantBySlug = async (req, res) => {
   const restaurant = await (
     await Restaurant.findOne({ slug: req.params.slug })
@@ -189,7 +196,6 @@ exports.mapRestaurants = async (req, res) => {
     .limit(10);
 
   console.log(restaurants);
-
 };
 
 exports.mapPage = (req, res) => {
@@ -197,13 +203,12 @@ exports.mapPage = (req, res) => {
 };
 
 exports.heartRestaurant = async (req, res) => {
-  const hearts = req.user.hearts.map(obj => obj.toString());
-  const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
-  const user = await User
-    .findByIdAndUpdate(
-      req.user._id,
-      { [operator]: { hearts: req.params.id} },
-      { new: true }
-    );
-    res.json(user);
-}
+  const hearts = req.user.hearts.map((obj) => obj.toString());
+  const operator = hearts.includes(req.params.id) ? "$pull" : "$addToSet";
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { [operator]: { hearts: req.params.id } },
+    { new: true }
+  );
+  res.json(user);
+};

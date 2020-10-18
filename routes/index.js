@@ -46,15 +46,20 @@ router.get(
 // View restaurants with tags and categories
 router.get("/tags", restaurantController.getRestaurantByTag);
 router.get("/tags/:tag", restaurantController.getRestaurantByTag);
-
 router.get("/categories", restaurantController.getRestaurantByCategory);
 router.get(
   "/categories/:category",
   restaurantController.getRestaurantByCategory
 );
 
+// View restaurants on Google Map 
 router.get("/map", restaurantController.mapPage);
+
+// View top restaurants
 router.get("/top", restaurantController.topRestaurants);
+
+// View favorite restaurants
+router.get("/favorites", catchErrors(restaurantController.getFavoriteRestaurants));
 
 //User Accounts Register and Sign In
 router.get("/register", userController.registerForm);
@@ -71,7 +76,7 @@ router.post("/login", authController.login);
 
 // Personal User Accounts
 router.get("/account", authController.isLoggedIn, userController.account);
-router.post("/account", catchErrors(userController.updateAccount));
+router.post("/account", authController.isLoggedIn, catchErrors(userController.updateAccount));
 
 // Reset Password
 router.post(
