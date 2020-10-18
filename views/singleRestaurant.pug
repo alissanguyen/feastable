@@ -1,5 +1,7 @@
 extends layout 
 
+include mixins/_reviewForm
+
 block content
     .single
         .single__hero
@@ -24,3 +26,6 @@ block content
                     li.categories
                         a.category__link(href=`/categories/${category}`)
                             span.category__text ##{category}
+
+        if user
+            +reviewForm(restaurant)

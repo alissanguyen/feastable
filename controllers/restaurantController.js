@@ -113,15 +113,10 @@ exports.getFavoriteRestaurants = async (req, res) => {
   res.render("restaurants", { title: "Favorite Restaurants", restaurants });
 };
 
-exports.getRestaurantBySlug = async (req, res) => {
-  const restaurant = await (
-    await Restaurant.findOne({ slug: req.params.slug })
-  ).populated("author");
+exports.getRestaurantBySlug = async (req, res, next) => {
+  const restaurant = await Restaurant.findOne({ slug: req.params.slug }).populate("author");
   if (!restaurant) return next();
-  res.render("singleRestaurant", {
-    title: `${restaurant.name}`,
-    restaurant,
-  });
+  res.render("singleRestaurant", { restaurant, title: `${restaurant.name}` });
 };
 
 exports.getRestaurantByTag = async (req, res) => {
