@@ -13,6 +13,10 @@ mixin restaurantCard(restaurant = {})
                     .restaurant__action.restaurant__action--edit
                         a(href=`/restaurants/${restaurant._id}/edit`)
                             != h.icon('pencil')
+                if restaurant.reviews
+                    .restaurant__action.restaurant__action--count
+                        != h.icon('review')
+                        span= restaurant.reviews.length
             img(src=`/uploads/${restaurant.photo || 'restaurant.png'}`)
             h2.title
                 a(href=`/restaurants/${restaurant.slug}`) #{restaurant.name}

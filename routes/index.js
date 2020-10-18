@@ -56,11 +56,11 @@ router.get(
 // View restaurants on Google Map 
 router.get("/map", restaurantController.mapPage);
 
-// View top restaurants
-router.get("/top", restaurantController.topRestaurants);
-
 // View favorite restaurants
 router.get("/favorites", catchErrors(restaurantController.getFavoriteRestaurants));
+
+// View top restaurants
+router.get("/top", catchErrors(restaurantController.getTopRestaurants));
 
 //User Accounts Register and Sign In
 router.get("/register", userController.registerForm);

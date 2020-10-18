@@ -61,7 +61,7 @@ exports.createRestaurant = async (req, res) => {
 };
 
 exports.getRestaurants = async (req, res) => {
-  // 1. Query the database for a list of all stores
+  // Query the database for a list of all stores
   const restaurants = await Restaurant.find();
   res.render("restaurants", { title: "Restaurants", restaurants });
 };
@@ -175,8 +175,9 @@ exports.searchRestaurants = async (req, res) => {
   res.json(restaurants);
 };
 
-exports.topRestaurants = (req, res) => {
-  res.render("topRestaurants");
+exports.getTopRestaurants = async (req, res) => {
+  const restaurants = await Restaurant.getTopRestaurants();
+  res.render("topRestaurants", {restaurants, title: 'Top Restaurants'});
 };
 
 exports.mapRestaurants = async (req, res) => {

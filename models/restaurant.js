@@ -89,11 +89,54 @@ restaurantSchema.statics.getCategoriesList = function () {
   ]);
 };
 
+// Get top restaurants
+restaurantSchema.statics.getTopRestaurants = function () {
+  return this.aggregate([
+    //1. Lookup restaurants and populate their reviews
+    {
+      $lookup: {
+        from: "reviews",
+        localField: "_id",
+        foreignField: "restaurant",
+        as: "reviews",
+      },
+    },
+    //2. Filter for only restaurants that have 2 or more reviews
+    {
+      $match: {
+        "reviews.1": { $exists: true },
+      },
+    },
+    //3. Add the average reviews field
+    {
+      $set: {
+        averageRating: { $avg: "$reviews.rating" },
+      },
+    },
+    //4. Sort it by our new field, highest reviews first
+    {
+      $sort: {
+        averageRating: -1,
+      },
+    },
+    //5. Limit to at most 10
+    { $limit: 10 }
+  ]);
+};
+
 // Find reviews where the restaurants '_id' property === reviews 'restaurant' property
 restaurantSchema.virtual("reviews", {
   ref: "Review", // link to 'Review' model
   localField: "_id", // which field on the restaurant?
   foreignField: "restaurant", // which field on the review?
 });
+
+function autopopulate(next) {
+  this.populate('reviews');
+  next();
+}
+
+restaurantSchema.pre('find', autopopulate);
+restaurantSchema.pre('findOne', autopopulate);
 
 module.exports = mongoose.model("Restaurant", restaurantSchema);
