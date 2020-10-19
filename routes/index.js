@@ -6,9 +6,10 @@ const authController = require("../controllers/authController");
 const reviewController = require("../controllers/reviewController");''
 const { catchErrors } = require("../handlers/errorHandlers");
 
-// Redirect to different sites depends on URL
+// Redirect to different homepage 
 router.get("/", catchErrors(restaurantController.getRestaurants));
 router.get("/restaurants", catchErrors(restaurantController.getRestaurants));
+router.get("/restaurants/page/:page", catchErrors(restaurantController.getRestaurants));
 
 // Adding restaurants
 router.get(

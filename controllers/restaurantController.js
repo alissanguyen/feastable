@@ -61,9 +61,36 @@ exports.createRestaurant = async (req, res) => {
 };
 
 exports.getRestaurants = async (req, res) => {
-  // Query the database for a list of all stores
-  const restaurants = await Restaurant.find();
-  res.render("restaurants", { title: "Restaurants", restaurants });
+  const page = req.params.page || 1;
+  const limit = 6; //Limit to only display 6 restaurants per page
+  const skip = page * limit - limit; //Number of skipped restaurants on every next page
+
+  // 1. Query the database for a list of all stores
+  const restaurantsPromise = Restaurant.find()
+    .skip(skip)
+    .limit(limit)
+    .sort({ created: "desc" });
+  const countPromise = Restaurant.count();
+  const [restaurants, count] = await Promise.all([
+    restaurantsPromise,
+    countPromise,
+  ]);
+  const pages = Math.ceil(count / limit); //upper bound of the result.
+  if (!restaurants.length && skip) {
+    req.flash(
+      "info",
+      "The page you asked for doesn't exist. You have been redirected to the last available page."
+    );
+    res.redirect(`/restaurants/page/${pages}`);
+    return;
+  }
+  res.render("restaurants", {
+    title: "Restaurants",
+    restaurants,
+    page,
+    pages,
+    count,
+  });
 };
 
 const confirmOwner = (restaurant, user) => {
@@ -177,7 +204,7 @@ exports.searchRestaurants = async (req, res) => {
 
 exports.getTopRestaurants = async (req, res) => {
   const restaurants = await Restaurant.getTopRestaurants();
-  res.render("topRestaurants", {restaurants, title: 'Top Restaurants'});
+  res.render("topRestaurants", { restaurants, title: "Top Restaurants" });
 };
 
 exports.mapRestaurants = async (req, res) => {

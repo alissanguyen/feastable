@@ -1,6 +1,7 @@
 extends layout
 
 include mixins/_restaurantCard
+include mixins/_pagination
 
 block content
     .inner
@@ -8,3 +9,4 @@ block content
         .restaurants
             each restaurant in restaurants
                 +restaurantCard(restaurant)
+        +pagination(page, pages, count)
